@@ -1,0 +1,15 @@
+{
+  "name": "proshop",
+  "version": "2.0.0",
+  "description": "E-.Commerce application built with MERN-stack",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node backend/server.js"
+  },
+  "author": "Nargis",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
