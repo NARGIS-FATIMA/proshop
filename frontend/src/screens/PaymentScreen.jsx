@@ -23,7 +23,7 @@ const PaymentScreen = () => {
     const submitHandler = (e) => {
         e.preventDefault();
         dispatch(savePaymentMethod(paymentMethod));
-        navigate('/placeholder');
+        navigate('/placeorder');
     }
     
   return (
@@ -34,7 +34,7 @@ const PaymentScreen = () => {
             <Form.Group>
                 <Form.Label as= 'legend'>Select Method</Form.Label>
                 <Col>
-                <Form.Check 
+                < Form.Check
                 type="radio" 
                 className="my-2" 
                 label='PayPal or Credit Card'
@@ -43,7 +43,7 @@ const PaymentScreen = () => {
                 value="PayPal" 
                 checked
                 onChange={(e) => setPaymentMethod(e.target.value)}
-                > </Form.Check>
+                />
                 </Col>
             </Form.Group>
             <Button type="submit" variant="primary">Continue</Button>
