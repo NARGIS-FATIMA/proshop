@@ -10,17 +10,34 @@ import {
 } from "react-bootstrap";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
-import { useGetOrderDetailsQuery } from "../slices/ordersApiSlice";
+import { useGetOrderDetailsQuery, useDelivereOrderMutation, } from "../slices/ordersApiSlice";
+import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+
 
 const OrderScreen = () => {
   const { id: orderId } = useParams();
-
+  const { userInfo } = useSelector(state => state.auth) 
   const {
     data: order,
     refetch,
     isLoading,
     error,
+    
   } = useGetOrderDetailsQuery(orderId);
+
+  const [ deliverOrder, { isLoading: loadingDeliver} ] = useDelivereOrderMutation();
+
+  const deliverOrderHandler = async() => {
+    try {
+        await deliverOrder(orderId);
+        refetch();
+        toast.success('Order Delivered');
+
+    } catch (error) {
+        toast.error(error?.data?.message || error.message); 
+    }
+  }
   
   return isLoading ? <Loader /> : error ? <Message variant="danger" /> 
   : (
@@ -120,8 +137,19 @@ const OrderScreen = () => {
                             <Col>${order.totalPrice}</Col>
                         </Row>
                     </ListGroup.Item>
-                        {/*  PAY ORDER PLACEHOLDER*/} 
-                        {/*  MARK AS DELIVERED PLACEHOLDER*/} 
+                        
+                        { loadingDeliver && <Loader />} 
+
+                        { userInfo && userInfo.isAdmin && order.isPaid &&
+                        !order.isDelivered && (
+                            <ListGroup.Item>
+                                <Button type="button" className="btn-btn-block"
+                                  onClick={deliverOrderHandler}
+                                  >
+                                    Mark As Delivered
+                                  </Button>
+                            </ListGroup.Item>
+                        )}
 
                 </ListGroup>
             </Card>
