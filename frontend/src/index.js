@@ -24,6 +24,7 @@ import ProductListScreen from './screens/admin/ProductListScreen';
 import ProductEditScreen from './screens/admin/ProductEditScreen';
 import UserListScreen from './screens/admin/UserListScreen';
 import UserEditScreen from './screens/admin/UserEditScreen';
+import {HelmetProvider} from 'react-helmet-async';
 
 const router=createBrowserRouter(
   createRoutesFromElements(
@@ -62,9 +63,11 @@ const router=createBrowserRouter(
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <HelmetProvider>
     <Provider store={store}>
     <RouterProvider router={router} />
     </Provider>
+    </HelmetProvider>
   </React.StrictMode>
 );
 
